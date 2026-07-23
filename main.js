@@ -110,7 +110,14 @@ const notify = async (notice) => {
 }
 
 const main = async () => {
-  await notify(await glados())
+  const notice = await glados()
+  if (!process.env.NOTIFY && notice) {
+    // 默认输出到控制台，方便在 Actions 日志中查看
+    for (const line of notice) {
+      console.log(line)
+    }
+  }
+  await notify(notice)
 }
 
 main()
